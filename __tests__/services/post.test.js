@@ -117,7 +117,7 @@ describe("post unlike", () => {
 const postDTOcreate = {
   authorId: "TEST_ID",
   message:
-    "This is a normal message for a post, I mean people these days write a lot, add emojis like 🧀.",
+    "This is a normal message for a post, I mean people these days write a lot, add emojis like 🧀. Vitae dolores dolor dolore et praesentium voluptas quo.",
   picture: "http://placeimg.com/640/480/food",
   video: "",
 };
