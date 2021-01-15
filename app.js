@@ -1,14 +1,19 @@
 const express = require("express")
-
+const bodyParser = require('body-parser')
 
 // Define app
 const app = express();
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 app.get("/", (req, res) => {
     res.json("J'aime la raclette 🧀");
 })
+require("./config/db.js")()
 
-require("./routes/raclette")(app)
+const db = require("./routes/raclette")(app)
 
 
 //Defin and start server
