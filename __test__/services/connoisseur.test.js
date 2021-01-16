@@ -13,6 +13,7 @@ beforeAll(async () => {
     await dbHandler.connect();
 });
 
+
 /**
  * Clear all test data after every test.
  */
@@ -40,6 +41,21 @@ describe('connoisseur create ', () => {
         })
             .not
             .toThrow();
+    });
+
+    it('exists after being created', async () => {
+        await connoisseurService.create(connoisseurComplete);
+        const freshConnoisseur = await connoisseurModel.findOne()
+        expect(freshConnoisseur.name).toBe(connoisseurComplete.name)
+
+    });
+
+    it('cannot be created twice with same name', async () => {
+        await connoisseurService.create(connoisseurComplete);
+        await connoisseurService.create(connoisseurComplete);
+        const freshConnoisseurs = await connoisseurModel.find()
+        expect(freshConnoisseurs).toHaveLength(1)
+
     });
 
 });

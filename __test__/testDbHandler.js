@@ -13,9 +13,7 @@ module.exports.connect = async () => {
 
     const mongooseOpts = {
         useNewUrlParser: true,
-        autoReconnect: true,
-        reconnectTries: Number.MAX_VALUE,
-        reconnectInterval: 1000
+        useUnifiedTopology: true
     };
 
     await mongoose.connect(uri, mongooseOpts);
@@ -40,4 +38,5 @@ module.exports.clearDatabase = async () => {
         const collection = collections[key];
         await collection.deleteMany();
     }
+    mongoose.connection.dropDatabase();
 }

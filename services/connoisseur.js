@@ -6,9 +6,13 @@ module.exports = {
      */
     create: async (params) => {
         //check if the connoisser exists
-        if (await Connoisseur.findOne({name:params.name})) {return}
+        const potentiallyExisting = await Connoisseur.findOne({name:params.name})
+        if (potentiallyExisting) {
+            console.log("Already existing connoisseur with name : "+params.name)
+            return potentiallyExisting
+        }
         // create a new connoisseur
-        const newConnoisseur = new Connoisseur({name: params.name});
+        const newConnoisseur = new Connoisseur(params);
         return await newConnoisseur.save()
     },
 
