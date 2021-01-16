@@ -10,3 +10,10 @@ You can evaluate how much you need, who needs what, adapt to specific tastes, et
 Node (obv) `brew install nvm` `nvm install --lts`
 MongoDB `brew tap mongodb/brew` `brew install mongodb-community@4.4`
 Don't forget to start Mongo `mongod --config /usr/local/etc/mongod.conf`
+
+# Testing
+Jest for tests
+mongodb-memory-server for tests as well
+Adding ```  "jest":{
+    "testEnvironment": "node"
+  },``` to package.json in order to have jest work woth mongo
