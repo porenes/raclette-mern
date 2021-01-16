@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 })
 require("./config/db.js")()
 
-const racletteRoute = require("./routes/raclette")
+const racletteRoute = require("./routes/racletteParty")
 app.use('/raclette', racletteRoute)
 
 //Defin and start server
