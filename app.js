@@ -15,6 +15,8 @@ require("./config/db.js")()
 
 const racletteRoute = require("./routes/racletteParty")
 app.use('/party', racletteRoute)
+const connoisseurRoute = require("./routes/connoisseur")
+app.use('/connoisseur', connoisseurRoute)
 
 //Defin and start server
 const port = 7374;
