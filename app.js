@@ -13,8 +13,8 @@ app.get("/", (req, res) => {
 })
 require("./config/db.js")()
 
-const db = require("./routes/raclette")(app)
-
+const racletteRoute = require("./routes/raclette")
+app.use('/raclette', racletteRoute)
 
 //Defin and start server
 const port = 7374;

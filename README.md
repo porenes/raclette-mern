@@ -2,8 +2,9 @@
 
 Using MongoDB, Express.js and React to create a raclette simulator
 
-TODO
-[] turn on/off raclette machine
+## What does it do
+You have Raclette (appliance), you need cheese, pickles, potatoes and meat.
+You can put your cheese to grill, and set your plate
 
 # Requirements
 Node (obv) `brew install nvm` `nvm install --lts`
