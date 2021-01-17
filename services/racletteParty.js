@@ -1,4 +1,5 @@
 const RacletteParty = require('../models/racletteParty')
+const ConnoisseurService = require('./connoisseur')
 module.exports = {
 
     // listing all raclettes
@@ -7,10 +8,12 @@ module.exports = {
         return racletteParties;
     },
 
-    create: async (params) => {
+    create: async (host, date) => {
+        // finding the host by its name (should be unique)
+        const hostObj = await ConnoisseurService.findByName(host)
         const racletteParty = new RacletteParty({
-            host: params.name,
-            date: params.date
+            host,
+            date
         });
         try {
             const newRaclettePartyEntry = await racletteParty.save()

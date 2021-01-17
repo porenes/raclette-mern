@@ -21,5 +21,10 @@ module.exports = {
      */
     list: async () => {
         return await Connoisseur.find()
+    },
+
+    findByName: async (name) => {
+        return await Connoisseur.findOne({name})
     }
+
 }

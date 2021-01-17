@@ -60,6 +60,14 @@ describe('connoisseur create ', () => {
 
 });
 
+describe('connoisseur findByName', () => {
+    it('can find an existing connoisseur by name', async () => {
+        await connoisseurService.create(connoisseurComplete);
+        const foundConnoisseur = await connoisseurService.findByName(connoisseurComplete.name)
+        expect(foundConnoisseur.name).toBe(connoisseurComplete.name)
+    });
+});
+
 const connoisseurComplete = {
     name: 'Jean Cachesex',
     cheeseLoveRate: 5,

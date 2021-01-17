@@ -18,9 +18,9 @@ app.get("/", (req, res) => {
   res.json("J'aime la raclette 🧀");
 });
 
-const racletteRoute = require("./routes/racletteParty");
+const racletteRoute = require("./routes/racletteParty.routes");
 app.use("/party", racletteRoute);
-const connoisseurRoute = require("./routes/connoisseur");
+const connoisseurRoute = require("./routes/connoisseur.routes");
 app.use("/connoisseur", connoisseurRoute);
 
 //Defin and start server
