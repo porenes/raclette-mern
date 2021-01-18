@@ -1,5 +1,5 @@
 const RacletteParty = require("../models/racletteParty");
-const ConnoisseurService = require("./connoisseur");
+const ConnoisseurService = require("./connoisseur.service");
 module.exports = {
   // listing all raclettes
   list: async () => {
@@ -12,7 +12,7 @@ module.exports = {
     // finding the host by its name (should be unique)
     let hostObj = await ConnoisseurService.findByName(host);
     if (!hostObj) {
-      hostObj = await ConnoisseurService.create({name: host});
+      hostObj = await ConnoisseurService.create({ name: host });
     }
     const racletteParty = new RacletteParty({
       host: hostObj.name,
@@ -33,11 +33,15 @@ module.exports = {
   },
 
   addGuests: async (id, guests) => {
-    const raclette = await RacletteParty.findByIdAndUpdate(id, {
-      $addToSet: {
-        guests,
+    const raclette = await RacletteParty.findByIdAndUpdate(
+      id,
+      {
+        $addToSet: {
+          guests,
+        },
       },
-    });
+      { returnOriginal: false }
+    );
     return raclette;
   },
 };

@@ -5,12 +5,14 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "jest --runInBand ./__test__"
+    "test": "jest",
+    "test-coverage": "jest --coverage=true"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^26.0.20",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -22,7 +24,15 @@
     "nodemon": "2.0.4"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules",
+      "/__tests__/config"
+    ],
+    "coverageDirectory": "./coverage",
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}"
+    ]
   },
   "description": ""
 }

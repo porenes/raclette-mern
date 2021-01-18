@@ -2,9 +2,9 @@
 
 const mongoose = require('mongoose');
 
-const dbHandler = require('../testDbHandler');
-const connoisseurService = require('../../services/connoisseur');
-const connoisseurModel = require('../../models/connoisseur');
+const dbHandler = require('../config/testDbHandler');
+const ConnoisseurService = require('../../services/connoisseur.service');
+const Connoisseur = require('../../models/connoisseur');
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -37,23 +37,23 @@ describe('connoisseur create ', () => {
      */
     it('can be created correctly', async () => {
         expect(async () => {
-            await connoisseurService.create(connoisseurComplete);
+            await ConnoisseurService.create(connoisseurComplete);
         })
             .not
             .toThrow();
     });
 
     it('exists after being created', async () => {
-        await connoisseurService.create(connoisseurComplete);
-        const freshConnoisseur = await connoisseurModel.findOne()
+        await ConnoisseurService.create(connoisseurComplete);
+        const freshConnoisseur = await Connoisseur.findOne()
         expect(freshConnoisseur.name).toBe(connoisseurComplete.name)
 
     });
 
     it('cannot be created twice with same name', async () => {
-        await connoisseurService.create(connoisseurComplete);
-        await connoisseurService.create(connoisseurComplete);
-        const freshConnoisseurs = await connoisseurModel.find()
+        await ConnoisseurService.create(connoisseurComplete);
+        await ConnoisseurService.create(connoisseurComplete);
+        const freshConnoisseurs = await Connoisseur.find()
         expect(freshConnoisseurs).toHaveLength(1)
 
     });
@@ -62,8 +62,8 @@ describe('connoisseur create ', () => {
 
 describe('connoisseur findByName', () => {
     it('can find an existing connoisseur by name', async () => {
-        await connoisseurService.create(connoisseurComplete);
-        const foundConnoisseur = await connoisseurService.findByName(connoisseurComplete.name)
+        await ConnoisseurService.create(connoisseurComplete);
+        const foundConnoisseur = await ConnoisseurService.findByName(connoisseurComplete.name)
         expect(foundConnoisseur.name).toBe(connoisseurComplete.name)
     });
 });

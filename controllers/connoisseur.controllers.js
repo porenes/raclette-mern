@@ -1,4 +1,4 @@
-const ConnoisseurService = require("../services/connoisseur")
+const ConnoisseurService = require("../services/connoisseur.service")
 
 module.exports = {
     list: async (req, res) => {

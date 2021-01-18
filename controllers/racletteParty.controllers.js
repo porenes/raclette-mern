@@ -1,4 +1,4 @@
-const RaclettePartyService = require("../services/racletteParty");
+const RaclettePartyService = require("../services/racletteParty.service");
 
 module.exports = {
   list: async (req, res) => {
