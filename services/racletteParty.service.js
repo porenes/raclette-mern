@@ -12,7 +12,7 @@ module.exports = {
     // finding the host by its name (should be unique)
     let hostObj = await ConnoisseurService.findByName(host);
     if (!hostObj) {
-      hostObj = await ConnoisseurService.create({ name: host });
+      hostObj = await ConnoisseurService.create(host);
     }
     const racletteParty = new RacletteParty({
       host: hostObj.name,
@@ -33,15 +33,22 @@ module.exports = {
   },
 
   addGuests: async (id, guests) => {
-    const raclette = await RacletteParty.findByIdAndUpdate(
-      id,
-      {
-        $addToSet: {
-          guests,
-        },
-      },
-      { returnOriginal: false }
-    );
-    return raclette;
+          //TODO check if id exists
+          try {
+            const raclette = await RacletteParty.findByIdAndUpdate(
+              id,
+              {
+                $addToSet: {
+                  guests,
+                },
+              },
+              { returnOriginal: false }
+            );
+            return raclette;
+            
+          } catch (error) {
+            console.error("🤦🏻‍♂️ Error adding Guest : "+error);
+            throw error;
+          }
   },
 };

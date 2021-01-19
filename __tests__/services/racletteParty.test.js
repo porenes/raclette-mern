@@ -52,7 +52,7 @@ describe("Raclette party create", () => {
     //add test for date
   });
   it("creates a party for an existing user", async () => {
-    await ConnoisseurService.create({ name: "ManuMicron" });
+    await ConnoisseurService.create("ManuMicron");
     const newRacletteParty = await RaclettePartyService.create(
       "ManuMicron",
       "2022-02-02"
@@ -64,7 +64,10 @@ describe("Raclette party create", () => {
 
 describe("Raclette party show", () => {
   it("retrieves an existing party", async () => {
-    const party = await RaclettePartyService.create("DonnyTrompe", "2022-02-02");
+    const party = await RaclettePartyService.create(
+      "DonnyTrompe",
+      "2022-02-02"
+    );
     const foundParty = await RaclettePartyService.show(party.id);
     expect(foundParty.id).toBe(party.id);
     expect(foundParty.host).toBe(party.host);
@@ -73,7 +76,10 @@ describe("Raclette party show", () => {
 
 describe("Raclette party addGuests", () => {
   it("adds existing user as guest to an existing party", async () => {
-    const party = await RaclettePartyService.create("DonnyTrompe", "2022-02-02");
+    const party = await RaclettePartyService.create(
+      "DonnyTrompe",
+      "2022-02-02"
+    );
     const updatedParty = await RaclettePartyService.addGuests(party.id, [
       "toto",
       "titi",
