@@ -36,19 +36,19 @@ describe("connoisseur create ", () => {
    */
   it("can be created correctly", async () => {
     expect(async () => {
-      await ConnoisseurService.create(connoisseurComplete.name);
+      await ConnoisseurService.create(connoisseurComplete);
     }).not.toThrow();
   });
 
   it("exists after being created", async () => {
-    await ConnoisseurService.create(connoisseurComplete.name);
+    await ConnoisseurService.create(connoisseurComplete);
     const freshConnoisseur = await Connoisseur.findOne();
     expect(freshConnoisseur.name).toBe(connoisseurComplete.name);
   });
 
   it("cannot be created twice with same name", async () => {
-    await ConnoisseurService.create(connoisseurComplete.name);
-    await ConnoisseurService.create(connoisseurComplete.name);
+    await ConnoisseurService.create(connoisseurComplete);
+    await ConnoisseurService.create(connoisseurComplete);
     const freshConnoisseurs = await Connoisseur.find();
     expect(freshConnoisseurs).toHaveLength(1);
   });
@@ -56,7 +56,7 @@ describe("connoisseur create ", () => {
 
 describe("connoisseur findByName", () => {
   it("can find an existing connoisseur by name", async () => {
-    await ConnoisseurService.create(connoisseurComplete.name);
+    await ConnoisseurService.create(connoisseurComplete);
     const foundConnoisseur = await ConnoisseurService.findByName(
       connoisseurComplete.name
     );
@@ -68,4 +68,5 @@ const connoisseurComplete = {
   name: "Jean Cachesex",
   cheeseLoveRate: 5,
   meatEater: true,
+  password: "M4nuMonAm0ur"
 };

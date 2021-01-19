@@ -52,7 +52,7 @@ describe("Raclette party create", () => {
     //add test for date
   });
   it("creates a party for an existing user", async () => {
-    await ConnoisseurService.create("ManuMicron");
+    await ConnoisseurService.create({name: "ManuMicron"});
     const newRacletteParty = await RaclettePartyService.create(
       "ManuMicron",
       "2022-02-02"

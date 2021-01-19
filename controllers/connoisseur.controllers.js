@@ -9,13 +9,13 @@ module.exports = {
     }
   },
   create: async (req, res) => {
-    const { name } = req.body;
-    if (!name)
+    const connoisseurDTO = req.body;
+    if (!connoisseurDTO.name)
       res
         .status(400)
         .json({ message: "Please provide a name to create a new connoisseur" });
     try {
-      res.status(201).json(await ConnoisseurService.create(name));
+      res.status(201).json(await ConnoisseurService.create(connoisseurDTO));
     } catch (error) {
       res.status(400).json({ message: "Something went wrong", error });
     }

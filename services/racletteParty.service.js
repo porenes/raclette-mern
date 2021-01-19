@@ -12,7 +12,7 @@ module.exports = {
     // finding the host by its name (should be unique)
     let hostObj = await ConnoisseurService.findByName(host);
     if (!hostObj) {
-      hostObj = await ConnoisseurService.create(host);
+      hostObj = await ConnoisseurService.create({name: host});
     }
     const racletteParty = new RacletteParty({
       host: hostObj.name,
