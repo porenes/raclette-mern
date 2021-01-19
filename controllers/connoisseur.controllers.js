@@ -9,7 +9,7 @@ module.exports = {
     }
   },
   create: async (req, res) => {
-    const { name } = req.body.name;
+    const { name } = req.body;
     if (!name)
       res
         .status(400)

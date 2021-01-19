@@ -16,7 +16,7 @@ module.exports = {
         .json({ message: "Please provide a host for the party and a date !" });
     try {
       const newRacletteParty = await RaclettePartyService.create(host, date);
-      res.status(200).json(newRacletteParty);
+      res.status(201).json(newRacletteParty);
     } catch (error) {
       res.status(400).json({ message: "Something went wrong", error });
     }
