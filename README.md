@@ -17,3 +17,7 @@ mongodb-memory-server for tests as well
 Adding ```  "jest":{
     "testEnvironment": "node"
   },``` to package.json in order to have jest work woth mongo
+
+# Inspiration
+https://www.freecodecamp.org/news/learn-how-to-handle-authentication-with-node-using-passport-js-4a56ed18e81e/
+

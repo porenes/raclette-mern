@@ -31,4 +31,21 @@ module.exports = {
   findByName: async (name) => {
     return await Connoisseur.findOne({ name });
   },
+
+  register: async (connoisseurDTO) => {
+    //TODO manage case when user already exists
+    const finalUser = new Connoisseur(connoisseurDTO);
+    finalUser.setPassword(connoisseurDTO.password);
+    await finalUser.save();
+    return finalUser.toAuthJSON();
+  },
+  authenticate: async (connoisseurDTO) => {
+    const passportUser = await Connoisseur.findOne({email: connoisseurDTO.email})
+    if(passportUser) {
+      const user = passportUser;
+      user.token = passportUser.generateJWT();
+
+      return res.json({ user: user.toAuthJSON() });
+    }
+  }
 };

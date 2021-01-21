@@ -1,19 +1,28 @@
 const router = require("express").Router();
 const ConnoisseurController = require("../controllers/connoisseur.controllers");
+const auth = require("./auth.routes");
 
-/**List all available raclettes */
-router.get("/", async (req, res) => {
-  await ConnoisseurController.list(req, res);
+
+router.get("/", auth.required, async (req, res,next) => {
+  await ConnoisseurController.list(req, res,next);
 });
-/* Create a raclette device, defining its owner
-    Returns the URL to get its status
-*/
+
 router.post("/create", async (req, res) => {
-    await ConnoisseurController.create(req, res)
+  await ConnoisseurController.create(req, res);
 });
-//Get the status of a Raclette device
+
 router.get("/:name", async (req, res) => {
   res.json("todo");
 });
+
+router.post("/register", auth.optional, async (req, res, next) => {
+  await ConnoisseurController.register(req, res, next)
+});
+
+//POST login route (optional, everyone has access)
+router.post('/login', auth.optional, async (req, res, next) => {
+  await ConnoisseurController.login(req, res, next)
+});
+
 
 module.exports = router;
