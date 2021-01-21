@@ -30,6 +30,16 @@ module.exports = {
       res.status(400).json({ message: "Something went wrong", error });
     }
   },
+  delete: async (req, res, next) => {
+    const id = req.params.id;
+    if (!id) res.status(422).message("Id is required");
+    try {
+      await RaclettePartyService.delete(id)
+      res.status(204).send()
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
   addGuests: async (req, res, next) => {
     const id = req.params.id;
     if (!id)

@@ -17,6 +17,12 @@ router.get("/:id", auth.optional, async (req, res, next) => {
   await RaclettePartyController.show(req, res, next);
 });
 /**
+ * Deletes a Raclette Party
+ */
+router.delete("/:id", auth.optional, async (req, res, next) => {
+  await RaclettePartyController.delete(req, res, next);
+});
+/**
  * Adding guests to a raclette party
  */
 router.put("/addGuests/:id", auth.optional, async (req, res, next) => {

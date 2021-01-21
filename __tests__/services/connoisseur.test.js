@@ -56,7 +56,7 @@ describe("connoisseur create ", () => {
 
 describe("connoisseur findByName", () => {
   it("can find an existing connoisseur by name", async () => {
-    await ConnoisseurService.create(connoisseurComplete);
+    await Connoisseur.create(connoisseurComplete);
     const foundConnoisseur = await ConnoisseurService.findByName(
       connoisseurComplete.name
     );
@@ -64,9 +64,37 @@ describe("connoisseur findByName", () => {
   });
 });
 
+describe("Connoisseur show", () => {
+  it("can find an existing connoisseur by id", async () => {
+    const { _id } = await Connoisseur.create(connoisseurComplete);
+    const showman = await ConnoisseurService.show(_id);
+    expect(showman.name).toBe(connoisseurComplete.name);
+    expect(showman.cheeseLoveRate).toBe(connoisseurComplete.cheeseLoveRate);
+    expect(showman.meatEater).toBe(connoisseurComplete.meatEater);
+  });
+});
+
+describe("Connoisseur delete", () => {
+  it("can delete a connoisseur", async () => {
+    const {_id} = await Connoisseur.create(connoisseurComplete);
+    expect(await Connoisseur.findById(_id)).not.toBeNull();
+    await ConnoisseurService.delete(_id);
+    expect(await Connoisseur.findById(_id)).toBeNull();
+  });
+  //TODO
+});
+
+describe("Connoisseur register", () => {
+  //TODO
+});
+
+describe("Connoisseur authenticate", () => {
+  //TODO
+});
+
 const connoisseurComplete = {
   name: "Jean Cachesex",
   cheeseLoveRate: 5,
   meatEater: true,
-  password: "M4nuMonAm0ur"
+  password: "M4nuMonAm0ur",
 };

@@ -2,6 +2,7 @@ const { mongo } = require("mongoose");
 const mongoose = require("mongoose");
 const crypto = require("crypto")
 const jwt = require("jsonwebtoken")
+// TODO do not display salt and hash when querying
 const ConnoisseurSchema = mongoose.Schema({
   name: { type: String, required: true, unique: true },
   cheeseLoveRate: { type: Number, min: 0, max: 5, default: 3 },
@@ -10,6 +11,7 @@ const ConnoisseurSchema = mongoose.Schema({
   hash: String,
   salt: String,
 });
+
 
 /**
  * Creates a salt and saves a hashed version of the password

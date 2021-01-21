@@ -21,6 +21,25 @@ module.exports = {
       res.status(400).json({ message: "Something went wrong", error });
     }
   },
+  show: async (req, res, next) => {
+    const id = req.params.id;
+    if (!id) res.status(404).message("Nothing here");
+    try {
+      res.status(200).json(await ConnoisseurService.show(id))
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
+  delete: async (req, res, next) => {
+    const id = req.params.id;
+    if (!id) res.status(422).message("Id is required");
+    try {
+      await ConnoisseurService.delete(id)
+      res.status(204).send()
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
   register: async (req, res, next) => {
     const connoisseur = req.body;
     if (!connoisseur.email) {

@@ -51,3 +51,5 @@ coverage/lcov-report/services/racletteParty.service.js.html
 coverage/clover.xml
 coverage/coverage-final.json
 coverage/lcov.info
+coverage/.DS_Store
+.DS_Store

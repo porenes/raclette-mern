@@ -32,6 +32,26 @@ module.exports = {
     return await Connoisseur.findOne({ name });
   },
 
+  /**
+   * Returns a Connoisseur, based on the id provided
+   * @param {String} id
+   */
+  show: async (id) => {
+    return await Connoisseur.findById(id);
+  },
+
+  /**
+   * Deletes a Connoiseeur, base on its ID
+   * @param {String} id
+   */
+  delete: async (id) => {
+    return await Connoisseur.findByIdAndDelete(id);
+  },
+
+  /**
+   * Registers a new Connoisseur as a user, and returns an object with jwt token
+   * @param {Connoisseur} connoisseurDTO
+   */
   register: async (connoisseurDTO) => {
     //TODO manage case when user already exists
     const finalUser = new Connoisseur(connoisseurDTO);
@@ -39,13 +59,19 @@ module.exports = {
     await finalUser.save();
     return finalUser.toAuthJSON();
   },
+  /**
+   * Authenticates a user
+   * @param {Connoisseur} connoisseurDTO
+   */
   authenticate: async (connoisseurDTO) => {
-    const passportUser = await Connoisseur.findOne({email: connoisseurDTO.email})
-    if(passportUser) {
+    const passportUser = await Connoisseur.findOne({
+      email: connoisseurDTO.email,
+    });
+    if (passportUser) {
       const user = passportUser;
       user.token = passportUser.generateJWT();
 
       return res.json({ user: user.toAuthJSON() });
     }
-  }
+  },
 };
