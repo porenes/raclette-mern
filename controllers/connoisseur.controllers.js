@@ -9,7 +9,7 @@ module.exports = {
       res.status(400).json({ message: "Something went wrong", error });
     }
   },
-  create: async (req, res) => {
+  create: async (req, res, next) => {
     const connoisseurDTO = req.body;
     if (!connoisseurDTO.name)
       res

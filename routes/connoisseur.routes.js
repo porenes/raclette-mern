@@ -7,11 +7,11 @@ router.get("/", auth.required, async (req, res,next) => {
   await ConnoisseurController.list(req, res,next);
 });
 
-router.post("/create", async (req, res) => {
-  await ConnoisseurController.create(req, res);
+router.post("/create", auth.optional, async (req, res, next) => {
+  await ConnoisseurController.create(req, res, next);
 });
 
-router.get("/:name", async (req, res) => {
+router.get("/:name", auth.optional, async (req, res, next) => {
   res.json("todo");
 });
 
