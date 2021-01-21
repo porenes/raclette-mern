@@ -61,6 +61,7 @@ module.exports = {
       });
     }
 
+    //TODO maybe move to the service
     return passport.authenticate(
       "local",
       { session: false },

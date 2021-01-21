@@ -26,6 +26,25 @@ app.use("/party", racletteRoute);
 const connoisseurRoute = require("./routes/connoisseur.routes");
 app.use("/connoisseur", connoisseurRoute);
 
+
+// Nice error handling
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({message : 'invalid token...'});
+  }
+});
+app.use((err, req, res) => {
+  res.status(err.status || 500);
+
+  res.json({
+    errors: {
+      message: err.message,
+      error: {},
+    },
+  });
+});
+
+
 //Define and start server
 const port = process.env.PORT;
 app.listen(port, () =>
