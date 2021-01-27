@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "memorystore": "^1.6.4",
     "mongoose": "^5.11.12",
+    "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0"

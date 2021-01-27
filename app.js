@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const morgan = require('morgan')
 // const session = require("express-session");
 
 const app = express();
+app.use(morgan('dev'))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,6 +47,7 @@ const racletteRoute = require("./routes/racletteParty.routes");
 app.use("/party", racletteRoute);
 const connoisseurRoute = require("./routes/connoisseur.routes");
 app.use("/connoisseur", connoisseurRoute);
+
 
 // Nice error handling
 app.use(function (err, req, res, next) {
