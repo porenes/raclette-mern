@@ -1,44 +1,50 @@
 const router = require("express").Router();
 const ConnoisseurController = require("../controllers/connoisseur.controllers");
-const auth = require("./auth.routes");
+const Auth = require("../middlewares/Auth");
+const RaclettePassport = require("../config/passport");
 
 /**
  * LIST all Connoisseurs
  */
-router.get("/", auth.required, async (req, res,next) => {
-  await ConnoisseurController.list(req, res,next);
+router.get("/", Auth.optional, async (req, res, next) => {
+  await ConnoisseurController.list(req, res, next);
 });
 /**
  * Create a new Connoisseur
  */
-router.post("/create", auth.optional, async (req, res, next) => {
+router.post("/create", Auth.optional, async (req, res, next) => {
   await ConnoisseurController.create(req, res, next);
+});
+/**
+ * Returns the logged in Connoisseur information
+ */
+router.get("/me", Auth.required, async (req, res, next) => {
+  await ConnoisseurController.me(req, res, next);
 });
 /**
  * Returns a Connoisseur information
  */
-router.get("/:id", auth.optional, async (req, res, next) => {
-  await ConnoisseurController.show(req, res, next)
+router.get("/:id", Auth.optional, async (req, res, next) => {
+  await ConnoisseurController.show(req, res, next);
 });
 /**
  * Deletes a connoisseur
  */
-router.delete("/:id", auth.optional, async (req, res, next) => {
-  await ConnoisseurController.delete(req, res, next)
+router.delete("/:id", Auth.required, async (req, res, next) => {
+  await ConnoisseurController.delete(req, res, next);
 });
 /**
  * Registers a new Connoisseur
  */
-router.post("/register", auth.optional, async (req, res, next) => {
-  await ConnoisseurController.register(req, res, next)
+router.post("/register", Auth.optional, async (req, res, next) => {
+  await ConnoisseurController.register(req, res, next);
 });
 
 /**
  * LOGIN route
  */
-router.post('/login', auth.optional, async (req, res, next) => {
-  await ConnoisseurController.login(req, res, next)
+router.post("/login", Auth.optional, async (req, res, next) => {
+  await ConnoisseurController.login(req, res, next);
 });
-
 
 module.exports = router;
