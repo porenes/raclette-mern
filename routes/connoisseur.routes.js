@@ -22,6 +22,12 @@ router.get("/me", Auth.required, async (req, res, next) => {
   await ConnoisseurController.me(req, res, next);
 });
 /**
+ * Returns the logged in Connoisseur uid
+ */
+router.get("/uid", Auth.required, async (req, res, next) => {
+  await ConnoisseurController.uid(req, res, next);
+});
+/**
  * Returns a Connoisseur information
  */
 router.get("/:id", Auth.optional, async (req, res, next) => {

@@ -31,6 +31,15 @@ module.exports = {
     }
   },
   me: async (req, res, next) => {
+    const id = req.user.id;
+    if (!id) res.status(404).message("Nothing here");
+    try {
+      res.status(200).json(await ConnoisseurService.show(id));
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
+  uid: async (req, res, next) => {
     res.status(200).json(req.user);
   },
   delete: async (req, res, next) => {
@@ -84,8 +93,6 @@ module.exports = {
 
     //TODO maybe move to the service
     return RaclettePassport.authenticate("local", (err, connoisseur, info) => {
-      
-
       if (err) {
         console.error("Error when authenticating : " + err);
         return next(err);
