@@ -8,9 +8,9 @@ const ConnoisseurSchema = mongoose.Schema({
   cheeseLoveRate: { type: Number, min: 0, max: 5, default: 3 },
   meatEater: { type: Boolean, default: true },
   email: String,
-  hash: String,
-  salt: String,
-});
+  hash: {type: String, select: false},
+  salt: {type: String, select: false},
+}, {timestamps: true});
 
 
 /**
