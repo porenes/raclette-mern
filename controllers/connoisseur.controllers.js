@@ -66,7 +66,6 @@ module.exports = {
   },
   login: (req, res, next) => {
     const user = req.body;
-    console.log("Entering ConnoisseurController.login : ");
     if (!user.email) {
       return res.status(422).json({
         errors: {
@@ -92,13 +91,6 @@ module.exports = {
         return next(err);
       }
       if (connoisseur) {
-        //login is required to have session auth working
-        req.login(connoisseur, (err) => {
-          if (err) {
-            console.error("Error when logging in : " + err);
-            return next(err);
-          }
-        })
         const user = connoisseur;
         user.token = connoisseur.generateJWT();
         return res.status(200).json({ user: user.toAuthJSON() });
