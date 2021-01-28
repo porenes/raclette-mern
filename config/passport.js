@@ -13,7 +13,7 @@ RaclettePassport.use(
     // * Verification function
     (username, password, done) => {
       console.log("Finding user for auth : ", username);
-      Connoisseur.findOne({ email: username })
+      Connoisseur.findOne({ email: username }).select("+hash +salt")
         .then((user) => {
           // Using the validate password method from Connoisseur model
           if (!user || !user.validatePassword(password)) {
