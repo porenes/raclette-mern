@@ -4,10 +4,15 @@ module.exports = {
    * Create a new connoisseur
    */
   create: async (connoisseurDTO) => {
+    //TODO return errors instead of existing one if already existing
     //check if the connoisser exists
     const potentiallyExisting = await Connoisseur.findOne({
       name: connoisseurDTO.name,
     });
+    if (!potentiallyExisting)
+      potentiallyExisting = await Connoisseur.findOne({
+        email: connoisseurDTO.email,
+      });
     if (potentiallyExisting) {
       console.log(
         "Already existing connoisseur with name : " + connoisseurDTO.name
@@ -54,6 +59,14 @@ module.exports = {
    */
   register: async (connoisseurDTO) => {
     //TODO manage case when user already exists
+    const errors = {};
+    if (await Connoisseur.findOne({ name: connoisseurDTO.name })) {
+      errors.name = "already exists";
+    }
+    if (await Connoisseur.findOne({ email: connoisseurDTO.email })) {
+      errors.email = "already exists";
+    }
+    if (errors.name || errors.email) throw errors;
     const finalUser = new Connoisseur(connoisseurDTO);
     finalUser.setPassword(connoisseurDTO.password);
     await finalUser.save();

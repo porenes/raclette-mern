@@ -69,9 +69,15 @@ module.exports = {
         },
       });
     }
-
-    const finalUser = await ConnoisseurService.register(connoisseur);
-    res.json({ user: finalUser });
+    try {
+      const finalUser = await ConnoisseurService.register(connoisseur);
+      res.status(201).json({ user: finalUser });
+      
+    } catch (errors) {
+      console.error(errors);
+      res.status(400).json({errors})
+      
+    }
   },
   login: (req, res, next) => {
     const user = req.body;
