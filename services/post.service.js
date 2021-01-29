@@ -40,8 +40,9 @@ module.exports = {
             likers: likerId,
           },
         },
-        { returnOriginal: false }
+        { new: true }
       );
+      
       return post;
     } catch (error) {
       //TODO improve error
@@ -59,7 +60,7 @@ module.exports = {
             likers: likerId,
           },
         },
-        { returnOriginal: false }
+        { new: true }
       );
       return post;
     } catch (error) {
