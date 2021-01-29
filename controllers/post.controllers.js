@@ -9,7 +9,7 @@ module.exports = {
     }
   },
   create: async (req, res, next) => {
-    let { post } = req.body;
+    let  post  = req.body;
     // * We get the user id from auth, not from the payload
     post.authorId = req.user.id
     if (!post.message || !post.authorId)
@@ -24,7 +24,7 @@ module.exports = {
     }
   },
   show: async (req, res, next) => {
-    const id = req.params.id;
+    const {id} = req.params;
     if (!id) res.status(404).message("Nothing here");
     try {
       res.status(200).json(await PostService.show(id));
@@ -34,7 +34,7 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     // TODO add some security to check who is deleting
-    const id = req.params.id;
+    const {id} = req.params;
     if (!id) res.status(422).message("Id is required");
     try {
       await PostService.delete(id)
