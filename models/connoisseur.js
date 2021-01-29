@@ -1,17 +1,19 @@
 const { mongo } = require("mongoose");
 const mongoose = require("mongoose");
-const crypto = require("crypto")
-const jwt = require("jsonwebtoken")
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 // TODO do not display salt and hash when querying
-const ConnoisseurSchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  cheeseLoveRate: { type: Number, min: 0, max: 5, default: 3 },
-  meatEater: { type: Boolean, default: true },
-  email: String,
-  hash: {type: String, select: false},
-  salt: {type: String, select: false},
-}, {timestamps: true});
-
+const ConnoisseurSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true, unique: true },
+    cheeseLoveRate: { type: Number, min: 0, max: 5, default: 3 },
+    meatEater: { type: Boolean, default: true },
+    email: { type: String, unique: true },
+    hash: { type: String, select: false },
+    salt: { type: String, select: false },
+  },
+  { timestamps: true }
+);
 
 /**
  * Creates a salt and saves a hashed version of the password
@@ -26,7 +28,7 @@ ConnoisseurSchema.methods.setPassword = function (password) {
 
 /**
  * Validates a provided password against the hashed version stored
- * @param {String} password 
+ * @param {String} password
  */
 ConnoisseurSchema.methods.validatePassword = function (password) {
   const hash = crypto
