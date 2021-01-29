@@ -6,7 +6,7 @@ module.exports = {
   create: async (connoisseurDTO) => {
     //TODO return errors instead of existing one if already existing
     //check if the connoisser exists
-    const potentiallyExisting = await Connoisseur.findOne({
+    let potentiallyExisting = await Connoisseur.findOne({
       name: connoisseurDTO.name,
     });
     if (!potentiallyExisting)
