@@ -47,8 +47,8 @@ const racletteRoute = require("./routes/racletteParty.routes");
 app.use("/party", racletteRoute);
 const connoisseurRoute = require("./routes/connoisseur.routes");
 app.use("/connoisseur", connoisseurRoute);
-
-
+const postRoute = require('./routes/post.routes')
+app.use("/post", postRoute)
 // Nice error handling
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {
