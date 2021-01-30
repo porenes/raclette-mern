@@ -11,7 +11,8 @@ module.exports = {
    * List all posts
    */
   list: async () => {
-    return await Post.find();
+    //TODO handle partial grabbing
+    return await Post.find().sort('-createdAt');
   },
 
   /**
