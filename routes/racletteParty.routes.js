@@ -9,7 +9,7 @@ router.get("/", Auth.optional, async (req, res, next) => {
 /**  Create a raclette party, defining its owner
     Returns the URL to get its status
 */
-router.post("/create", Auth.optional, async (req, res, next) => {
+router.post("/create", Auth.required, async (req, res, next) => {
   await RaclettePartyController.create(req, res, next);
 });
 //Get the info about s RacletteParty

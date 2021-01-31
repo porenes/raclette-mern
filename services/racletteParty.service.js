@@ -15,15 +15,11 @@ module.exports = {
    * @param {Date} date date when the party takes place
    */
   create: async (host, date) => {
-    // finding the host by its name (should be unique)
-    let hostObj = await ConnoisseurService.findByName(host);
-    if (!hostObj) {
-      hostObj = await ConnoisseurService.create({ name: host });
-    }
+    console.log("Creating party for host",host);
     const racletteParty = new RacletteParty({
-      host: hostObj.name,
+      host: host.id,
       date,
-      guests: [hostObj.id],
+      guests: [host.id],
     });
     try {
       const newRaclettePartyEntry = await racletteParty.save();
