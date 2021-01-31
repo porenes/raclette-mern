@@ -5,7 +5,7 @@ module.exports = {
    * Lists all raclette parties
    */
   list: async () => {
-    const racletteParties = await RacletteParty.find();
+    const racletteParties = await RacletteParty.find().sort("date");
     return racletteParties;
   },
 
