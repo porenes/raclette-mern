@@ -64,6 +64,18 @@ describe("connoisseur findByName", () => {
   });
 });
 
+describe("connoisseur findByIds", () => {
+  it("can find two connoisseurs from an arry of ids", async () => {
+    const con_1 = await Connoisseur.create(connoisseurComplete);
+    const con_2 = await Connoisseur.create(connoisseurDTO2);
+    const foundConnoisseurs = await ConnoisseurService.findByIds([
+      con_1.id,
+      con_2.id,
+    ]);
+    expect(foundConnoisseurs).toHaveLength(2);
+  });
+});
+
 describe("Connoisseur show", () => {
   it("can find an existing connoisseur by id", async () => {
     const { _id } = await Connoisseur.create(connoisseurComplete);
@@ -76,7 +88,7 @@ describe("Connoisseur show", () => {
 
 describe("Connoisseur delete", () => {
   it("can delete a connoisseur", async () => {
-    const {_id} = await Connoisseur.create(connoisseurComplete);
+    const { _id } = await Connoisseur.create(connoisseurComplete);
     expect(await Connoisseur.findById(_id)).not.toBeNull();
     await ConnoisseurService.delete(_id);
     expect(await Connoisseur.findById(_id)).toBeNull();
@@ -94,7 +106,15 @@ describe("Connoisseur authenticate", () => {
 
 const connoisseurComplete = {
   name: "Jean Cachesex",
+  email: "jc@toto.fr",
   cheeseLoveRate: 5,
   meatEater: true,
+  password: "M4nuMonAm0ur",
+};
+const connoisseurDTO2 = {
+  name: "Manu Tango",
+  email: "mt@toto.fr",
+  cheeseLoveRate: 2,
+  meatEater: false,
   password: "M4nuMonAm0ur",
 };

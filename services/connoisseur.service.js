@@ -37,6 +37,11 @@ module.exports = {
     return await Connoisseur.findOne({ name });
   },
 
+  findByIds: async (ids) => {
+    console.log(ids); 
+    return await Connoisseur.find({ _id: ids });
+  },
+
   /**
    * Returns a Connoisseur, based on the id provided
    * @param {String} id

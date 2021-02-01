@@ -9,6 +9,14 @@ module.exports = {
       res.status(400).json({ message: "Something went wrong", error });
     }
   },
+  byIds: async (req, res, next) => {
+    try {
+      const { ids } = req.body;
+      res.status(200).json(await ConnoisseurService.findByIds(ids));
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
   create: async (req, res, next) => {
     const connoisseurDTO = req.body;
     if (!connoisseurDTO.name)
@@ -72,11 +80,9 @@ module.exports = {
     try {
       const finalUser = await ConnoisseurService.register(connoisseur);
       res.status(201).json({ user: finalUser });
-      
     } catch (errors) {
       console.error(errors);
-      res.status(400).json({errors})
-      
+      res.status(400).json({ errors });
     }
   },
   login: (req, res, next) => {

@@ -10,6 +10,12 @@ router.get("/", Auth.optional, async (req, res, next) => {
   await ConnoisseurController.list(req, res, next);
 });
 /**
+ * Find Connoisseurs by list of ids
+ */
+router.post("/byIds", Auth.optional, async (req, res, next) => {
+  await ConnoisseurController.byIds(req, res, next);
+});
+/**
  * Create a new Connoisseur
  */
 router.post("/create", Auth.optional, async (req, res, next) => {
