@@ -9,14 +9,14 @@ module.exports = {
     }
   },
   create: async (req, res, next) => {
-    const { date } = req.body;
+    const partyDTO = req.body;
     const host = req.user
-    if (!host || !date)
+    if (!host || !partyDTO.date)
       return res
         .status(400)
         .json({ message: "Please provide a host for the party and a date !" });
     try {
-      const newRacletteParty = await RaclettePartyService.create(host, date);
+      const newRacletteParty = await RaclettePartyService.create(host, partyDTO);
       return res.status(201).json(newRacletteParty);
     } catch (error) {
       return res.status(400).json({ message: "Something went wrong", error });

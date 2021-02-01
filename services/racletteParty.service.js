@@ -14,11 +14,11 @@ module.exports = {
    * @param {String} host Name of the host
    * @param {Date} date date when the party takes place
    */
-  create: async (host, date) => {
+  create: async (host, partyDTO) => {
     console.log("Creating party for host",host);
     const racletteParty = new RacletteParty({
+      ...partyDTO,
       host: host.id,
-      date,
       guests: [host.id],
     });
     try {
