@@ -40,6 +40,19 @@ router.get("/:id", Auth.optional, async (req, res, next) => {
   await ConnoisseurController.show(req, res, next);
 });
 /**
+ * Request a Connoisseur for friendship
+ */
+router.patch("/woo/:id", Auth.required, async (req, res, next) => {
+  await ConnoisseurController.woo(req, res, next);
+});
+/**
+ * Accept a Connoisseur's friendship request
+ */
+router.patch("/accept/:id", Auth.required, async (req, res, next) => {
+  await ConnoisseurController.accept(req, res, next);
+});
+
+/**
  * Deletes a connoisseur
  */
 router.delete("/:id", Auth.required, async (req, res, next) => {

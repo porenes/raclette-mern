@@ -38,6 +38,29 @@ module.exports = {
       res.status(400).json({ message: "Something went wrong", error });
     }
   },
+  woo: async (req, res, next) => {
+    //* Wooer is the one making the request
+    const wooerId = req.user.id;
+    const wooedId = req.params.id;
+    if (!wooedId) res.status(400).json({ message: "missing wooedId" });
+    try {
+      res.status(200).json(await ConnoisseurService.woo(wooerId, wooedId));
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
+  accept: async (req, res, next) => {
+    //* Wooed is the one accepting the request
+    const wooedId = req.user.id;
+    const wooerId = req.params.id;
+    if (!wooedId) res.status(400).json({ message: "missing wooedId" });
+    try {
+      res.status(200).json(await ConnoisseurService.accept(wooerId, wooedId));
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
+
   me: async (req, res, next) => {
     const id = req.user.id;
     if (!id) res.status(404).message("Nothing here");

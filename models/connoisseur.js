@@ -11,6 +11,8 @@ const ConnoisseurSchema = mongoose.Schema(
     email: { type: String, unique: true },
     hash: { type: String, select: false },
     salt: { type: String, select: false },
+    compeers: { type: [String] },
+    wooers: { type: [String] },
   },
   { timestamps: true }
 );

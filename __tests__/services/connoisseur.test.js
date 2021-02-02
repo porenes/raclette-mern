@@ -96,6 +96,30 @@ describe("Connoisseur delete", () => {
   //TODO
 });
 
+describe("Connoisseur woo", () => {
+  it("can woo a connoisseur", async () => {
+    const wooedId = (await Connoisseur.create(connoisseurComplete))._id;
+    const wooerId = (await Connoisseur.create(connoisseurDTO2))._id;
+    const wooedConnoisseur = await ConnoisseurService.woo(wooerId, wooedId);
+    expect(wooedConnoisseur.wooers).toHaveLength(1);
+  });
+});
+describe("Connoisseur accept", () => {
+  it("can accept a wooer as compeer", async () => {
+    const wooedId = (await Connoisseur.create(connoisseurComplete))._id;
+    const wooerId = (await Connoisseur.create(connoisseurDTO2))._id;
+    ConnoisseurService.woo(wooerId, wooedId).then(async () => {
+      const {
+        wooerConnoisseur,
+        wooedConnoisseur,
+      } = await ConnoisseurService.accept(wooerId, wooedId);
+
+      expect(wooedConnoisseur.compeers).toHaveLength(1);
+      expect(wooerConnoisseur.compeers).toHaveLength(1);
+    });
+  });
+});
+
 describe("Connoisseur register", () => {
   //TODO
 });
