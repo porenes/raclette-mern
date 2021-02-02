@@ -1,9 +1,12 @@
-const mongoose = require('mongoose');
-const raclettePartySchema = mongoose.Schema({
+const mongoose = require("mongoose");
+const raclettePartySchema = mongoose.Schema(
+  {
     host: { type: String, required: true },
-    date: { type: Date, required: true},
+    date: { type: Date, required: true },
     guests: [String],
-    seats: Number
-},
-{ timestamps: true });
-module.exports = mongoose.model('RacletteParty', raclettePartySchema);
+    seats: Number,
+    isPrivate: Boolean,
+  },
+  { timestamps: true }
+);
+module.exports = mongoose.model("RacletteParty", raclettePartySchema);

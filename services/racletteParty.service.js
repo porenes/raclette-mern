@@ -4,8 +4,18 @@ module.exports = {
   /**
    * Lists all raclette parties
    */
-  list: async () => {
-    const racletteParties = await RacletteParty.find().sort("date");
+  list: async (user) => {
+    const racletteParties = user
+      ? await RacletteParty.find({
+          $or: [
+            { $or: [({ isPrivate: false }, { isPrivate: { $exists: false } })] },
+            { host: user.id },
+            { guests: user.id },
+          ],
+        }).sort("date")
+      : await RacletteParty.find({
+          $or: [({ isPrivate: false }, { isPrivate: { $exists: false } })],
+        }).sort("date");
     return racletteParties;
   },
 
@@ -15,7 +25,7 @@ module.exports = {
    * @param {Date} date date when the party takes place
    */
   create: async (host, partyDTO) => {
-    console.log("Creating party for host",host);
+    console.log("Creating party for host", host);
     const racletteParty = new RacletteParty({
       ...partyDTO,
       host: host.id,
@@ -47,9 +57,9 @@ module.exports = {
   },
 
   /**
-   * Adds guests to a Raclette party 
-   * @param {String} id 
-   * @param {[String]]} guests 
+   * Adds guests to a Raclette party
+   * @param {String} id
+   * @param {[String]]} guests
    */
   addGuests: async (id, guests) => {
     //TODO check if id exists

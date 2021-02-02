@@ -3,7 +3,8 @@ const RaclettePartyService = require("../services/racletteParty.service");
 module.exports = {
   list: async (req, res, next) => {
     try {
-      res.status(200).json(await RaclettePartyService.list());
+      const {user} = req;
+      res.status(200).json(await RaclettePartyService.list(user));
     } catch (error) {
       res.status(400).json({ message: "Something went wrong", error });
     }
