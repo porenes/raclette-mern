@@ -100,11 +100,23 @@ describe("Connoisseur woo", () => {
   it("can woo a connoisseur", async () => {
     const wooedId = (await Connoisseur.create(connoisseurComplete))._id;
     const wooerId = (await Connoisseur.create(connoisseurDTO2))._id;
-    const wooedConnoisseur = await ConnoisseurService.woo(wooerId, wooedId);
-    expect(wooedConnoisseur.wooers).toHaveLength(1);
+    const {wooer,wooed} = await ConnoisseurService.woo(wooerId, wooedId);
+    expect(wooed.wooers).toHaveLength(1);
+    expect(wooer.wooeds).toHaveLength(1);
   });
 });
-describe("Connoisseur accept", () => {
+describe("Connoisseur unwoo", () => {
+  it("can unwoo a connoisseur", async () => {
+    const unwooedId = (await Connoisseur.create(connoisseurComplete))._id;
+    const unwooerId = (await Connoisseur.create(connoisseurDTO2))._id;
+    await ConnoisseurService.woo(unwooerId, unwooedId);
+    const {unwooer,unwooed} = await ConnoisseurService.unwoo(unwooerId, unwooedId);
+    expect(unwooed.wooers).toHaveLength(0);
+    expect(unwooer.wooeds).toHaveLength(0);
+  });
+});
+//TODO remove deprecated
+describe.skip("Connoisseur accept", () => {
   it("can accept a wooer as compeer", async () => {
     const wooedId = (await Connoisseur.create(connoisseurComplete))._id;
     const wooerId = (await Connoisseur.create(connoisseurDTO2))._id;

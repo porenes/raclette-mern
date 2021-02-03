@@ -49,6 +49,23 @@ module.exports = {
       res.status(400).json({ message: "Something went wrong", error });
     }
   },
+  unwoo: async (req, res, next) => {
+    //* Wooer is the one making the request
+    const unwooerId = req.user.id;
+    const unwooedId = req.params.id;
+    if (!unwooedId) res.status(400).json({ message: "missing unwooedId" });
+    try {
+      res.status(200).json(await ConnoisseurService.woo(unwooerId, unwooedId));
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
+  /**
+   * @deprecated
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   */
   accept: async (req, res, next) => {
     //* Wooed is the one accepting the request
     const wooedId = req.user.id;

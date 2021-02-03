@@ -2,7 +2,7 @@ const { mongo } = require("mongoose");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-// TODO do not display salt and hash when querying
+
 const ConnoisseurSchema = mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -13,6 +13,7 @@ const ConnoisseurSchema = mongoose.Schema(
     salt: { type: String, select: false },
     compeers: { type: [String] },
     wooers: { type: [String] },
+    wooeds: { type: [String] },
   },
   { timestamps: true }
 );

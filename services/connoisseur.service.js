@@ -52,7 +52,7 @@ module.exports = {
   },
 
   /**
-   * Woo a connoisseur
+   * Woo a connoisseur. If he already wooed you, you become compeers
    * @param {String} wooerId Id of the wooer connoisseur
    * @param {String} wooedId Id of the wooed connoisseur
    */
@@ -60,7 +60,16 @@ module.exports = {
     const errors = {};
     if (wooedId && mongoose.isValidObjectId(wooedId)) {
       if (wooerId && mongoose.isValidObjectId(wooerId)) {
-        return await Connoisseur.findByIdAndUpdate(
+        const wooer = await Connoisseur.findByIdAndUpdate(
+          wooerId,
+          {
+            $addToSet: {
+              wooeds: wooedId,
+            },
+          },
+          { new: true }
+        );
+        const wooed = await Connoisseur.findByIdAndUpdate(
           wooedId,
           {
             $addToSet: {
@@ -69,6 +78,8 @@ module.exports = {
           },
           { new: true }
         );
+
+        return { wooer, wooed };
       } else {
         console.error("Connoisseurervice.woo - invalid wooerId : " + wooerId);
         errors.wooerId = "is invalid";
@@ -79,6 +90,51 @@ module.exports = {
     }
     if (errors.wooedId || errors.wooerId) throw errors;
   },
+  /**
+   * UN-Woo a connoisseur. If he already wooed you, you become compeers
+   * @param {String} wooerId Id of the unwooer connoisseur
+   * @param {String} wooedId Id of the unwooed connoisseur
+   */
+  unwoo: async (unwooerId, unwooedId) => {
+    const errors = {};
+    if (unwooedId && mongoose.isValidObjectId(unwooedId)) {
+      if (unwooerId && mongoose.isValidObjectId(unwooerId)) {
+        const unwooer = await Connoisseur.findByIdAndUpdate(
+          unwooerId,
+          {
+            $pull: {
+              wooeds: unwooedId,
+            },
+          },
+          { new: true }
+        );
+        const unwooed = await Connoisseur.findByIdAndUpdate(
+          unwooedId,
+          {
+            $pull: {
+              wooers: unwooerId,
+            },
+          },
+          { new: true }
+        );
+
+        return { unwooer, unwooed };
+      } else {
+        console.error("Connoisseurervice.woo - invalid wooerId : " + wooerId);
+        errors.wooerId = "is invalid";
+      }
+    } else {
+      console.error("Connoisseurervice.woo - invalid wooedId : " + wooedId);
+      errors.wooedId = "is invalid";
+    }
+    if (errors.wooedId || errors.wooerId) throw errors;
+  },
+  /**
+   * @deprecated Never used
+   * ! to be removed
+   * @param {*} wooerId
+   * @param {*} wooedId
+   */
   accept: async (wooerId, wooedId) => {
     const errors = {};
     if (wooedId && mongoose.isValidObjectId(wooedId)) {
@@ -87,7 +143,7 @@ module.exports = {
       if (wooerId && mongoose.isValidObjectId(wooerId)) {
         console.log(wooers);
         console.log(wooers.indexOf(wooerId));
-        if (!(wooers.indexOf(wooerId)>=0)) {
+        if (!wooers.indexOf(wooerId)) {
           throw { wooer: "did not woo" };
         } else {
           const wooedCompeer = await Connoisseur.findByIdAndUpdate(

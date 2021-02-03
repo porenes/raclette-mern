@@ -40,12 +40,19 @@ router.get("/:id", Auth.optional, async (req, res, next) => {
   await ConnoisseurController.show(req, res, next);
 });
 /**
- * Request a Connoisseur for friendship
+ * add a following
  */
 router.patch("/woo/:id", Auth.required, async (req, res, next) => {
   await ConnoisseurController.woo(req, res, next);
 });
 /**
+ * remove a following
+ */
+router.patch("/unwoo/:id", Auth.required, async (req, res, next) => {
+  await ConnoisseurController.unwoo(req, res, next);
+});
+/**
+ * @deprecated
  * Accept a Connoisseur's friendship request
  */
 router.patch("/accept/:id", Auth.required, async (req, res, next) => {
