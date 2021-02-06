@@ -55,7 +55,7 @@ module.exports = {
     const unwooedId = req.params.id;
     if (!unwooedId) res.status(400).json({ message: "missing unwooedId" });
     try {
-      res.status(200).json(await ConnoisseurService.woo(unwooerId, unwooedId));
+      res.status(200).json(await ConnoisseurService.unwoo(unwooerId, unwooedId));
     } catch (error) {
       res.status(400).json({ message: "Something went wrong", error });
     }
