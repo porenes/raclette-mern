@@ -71,7 +71,7 @@ module.exports = {
             guests,
           },
         },
-        { returnOriginal: false }
+        { new: true }
       );
       return raclette;
     } catch (error) {
