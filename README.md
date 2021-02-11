@@ -3,8 +3,8 @@
 Using MongoDB, Express.js and React to create a Raclette Party helper
 
 ## What does it do
-You have Raclette (appliance), you need cheese, pickles, potatoes and meat.
-You can evaluate how much you need, who needs what, adapt to specific tastes, etc...
+It's a cheese lover social network
+You can plan your Raclette Parties, share your thoughts, list cheeses and meats you like, post reviews, etc
 
 # Requirements
 Node (obv) `brew install nvm` `nvm install --lts`
