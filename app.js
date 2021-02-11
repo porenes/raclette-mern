@@ -30,7 +30,6 @@ require("./models/connoisseur"); //! Required here for passport to work
 const passport = require("./config/passport");
 app.use(passport.initialize());
 
-
 // Route declaration
 const racletteRoute = require("./routes/racletteParty.routes");
 app.use("/party", racletteRoute);
@@ -38,6 +37,8 @@ const connoisseurRoute = require("./routes/connoisseur.routes");
 app.use("/connoisseur", connoisseurRoute);
 const postRoute = require("./routes/post.routes");
 app.use("/post", postRoute);
+const productsRoute = require("./routes/products.routes");
+app.use("/products", productsRoute);
 // Nice error handling
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {
