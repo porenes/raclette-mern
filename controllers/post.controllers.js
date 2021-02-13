@@ -9,9 +9,9 @@ module.exports = {
     }
   },
   create: async (req, res, next) => {
-    let  post  = req.body;
+    let post = req.body;
     // * We get the user id from auth, not from the payload
-    post.authorId = req.user.id
+    post.authorId = req.user.id;
     if (!post.message || !post.authorId)
       res
         .status(400)
@@ -20,11 +20,16 @@ module.exports = {
       const newPost = await PostService.create(post);
       res.status(201).json(newPost);
     } catch (error) {
-      res.status(400).json({ message: "Something went wrong", error });
+      if (
+        error.errors.message.kind === "minlength" &&
+        error.errors.message.path === "message"
+      ) {
+        res.status(422).json({ message: "too short" });
+      } else res.status(400).json({ message: "Something went wrong", error });
     }
   },
   show: async (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
     if (!id) res.status(404).message("Nothing here");
     try {
       res.status(200).json(await PostService.show(id));
@@ -34,11 +39,11 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     // TODO add some security to check who is deleting
-    const {id} = req.params;
+    const { id } = req.params;
     if (!id) res.status(422).message("Id is required");
     try {
-      await PostService.delete(id)
-      res.status(204).send()
+      await PostService.delete(id);
+      res.status(204).send();
     } catch (error) {
       res.status(400).json({ message: "Something went wrong", error });
     }
@@ -47,13 +52,10 @@ module.exports = {
     const id = req.params.id;
     const likerId = req.user.id;
     if (!id)
-      res
-        .status(400)
-        .json({
-          message: "No post to like",
-        });
-    if (!likerId)
-      res.status(400).json({ message: "No liker" });
+      res.status(400).json({
+        message: "No post to like",
+      });
+    if (!likerId) res.status(400).json({ message: "No liker" });
     try {
       res.status(200).json(await PostService.like(id, likerId));
     } catch (error) {
@@ -64,13 +66,10 @@ module.exports = {
     const id = req.params.id;
     const likerId = req.user.id;
     if (!id)
-      res
-        .status(400)
-        .json({
-          message: "No post to unlike",
-        });
-    if (!likerId)
-      res.status(400).json({ message: "No liker for unlike" });
+      res.status(400).json({
+        message: "No post to unlike",
+      });
+    if (!likerId) res.status(400).json({ message: "No liker for unlike" });
     try {
       res.status(200).json(await PostService.unlike(id, likerId));
     } catch (error) {
