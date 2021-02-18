@@ -2,9 +2,11 @@ const PostService = require("../services/post.service");
 
 module.exports = {
   list: async (req, res, next) => {
+    const {before, num} = req.query
     try {
-      res.status(200).json(await PostService.list());
+      res.status(200).json(await PostService.list(before, parseInt(num)));
     } catch (error) {
+      console.error("🤦🏻‍♂️ error in Post List controller : "+error);
       res.status(400).json({ message: "Something went wrong", error });
     }
   },

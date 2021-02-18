@@ -8,11 +8,35 @@ module.exports = {
   },
 
   /**
-   * List all posts
+   * Gets a list of posts
+   *
+   * @param {String} beforeId Id of the post to start from @default null (the latest)
+   * @param {Number} num Number of posts to get @default null (all)
    */
-  list: async () => {
-    //TODO handle partial grabbing
-    return await Post.find().sort('-createdAt');
+  list: async (beforeId = null, num = null) => {
+    try {
+      if (beforeId) {
+        const lastPost = await Post.findById(beforeId);
+        if (num) {
+          return await Post.find({
+            createdAt: { $lte: lastPost.createdAt },
+          })
+            .sort("-createdAt")
+            .limit(num);
+        } else
+          return await Post.find({
+            createdAt: { $lte: lastPost.createdAt },
+          }).sort("-createdAt");
+      } else {
+        return num
+          ? Post.find().sort("-createdAt").limit(num)
+          : Post.find().sort("-createdAt");
+      }
+    } catch (error) {
+      console.error("🤦🏻‍♂️ error getting list of posts for {}, {}", beforeId, num);
+      console.error(error);
+      throw error
+    }
   },
 
   /**
@@ -43,7 +67,7 @@ module.exports = {
         },
         { new: true }
       );
-      
+
       return post;
     } catch (error) {
       //TODO improve error

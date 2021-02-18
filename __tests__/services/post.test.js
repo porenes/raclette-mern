@@ -76,6 +76,24 @@ describe("post list", () => {
     const listPosts = await PostService.list();
     expect(listPosts).toHaveLength(3);
   });
+  it("can list posts before a certain post", async () => {
+    const post1 = await Post.create(postDTOcreate);
+    const post2 = await Post.create(postDTOcreate2);
+    const post3 = await Post.create(postDTOcreate3);
+    const listPosts = await PostService.list(post2._id);
+    expect(listPosts).toHaveLength(2);
+    expect(listPosts[0]._id).toEqual(post2._id);
+    expect(listPosts[1]._id).toEqual(post1._id);
+  });
+  it("can list a certain number of posts", async () => {
+    const post1 = await Post.create(postDTOcreate);
+    const post2 = await Post.create(postDTOcreate2);
+    const post3 = await Post.create(postDTOcreate3);
+    const listPosts = await PostService.list(null, 2);
+    expect(listPosts).toHaveLength(2);
+    expect(listPosts[0]._id).toEqual(post3._id);
+    expect(listPosts[1]._id).toEqual(post2._id);
+  });
 });
 
 describe("post like", () => {
@@ -115,21 +133,21 @@ describe("post unlike", () => {
 });
 
 const postDTOcreate = {
-  authorId: "TEST_ID",
+  authorId: "TEST_ID1",
   message:
     "This is a normal message for a post, I mean people these days write a lot, add emojis like 🧀. Vitae dolores dolor dolore et praesentium voluptas quo.",
   picture: "http://placeimg.com/640/480/food",
   video: "",
 };
 const postDTOcreate2 = {
-  authorId: "TEST_ID",
+  authorId: "TEST_ID2",
   message:
     "This is the second message. Nisi nemo consectetur provident esse. Deserunt expedita corporis officia sed. Nam adipisci aliquam et consequatur. Earum eos atque dolores soluta eaque nulla.",
   picture: "",
   video: "",
 };
 const postDTOcreate3 = {
-  authorId: "TEST_ID",
+  authorId: "TEST_ID3",
   message:
     "Eius aut sed adipisci quis aut cum. Voluptas quo et cumque.Error ab dolores. Consequatur consequatur veritatis voluptatem dolores voluptatibus dolores dolores blanditiis. Earum porro voluptatem nisi quisquam repellat est hic deleniti repudiandae.",
   picture: "",
