@@ -19,13 +19,13 @@ module.exports = {
         const lastPost = await Post.findById(beforeId);
         if (num) {
           return await Post.find({
-            createdAt: { $lte: lastPost.createdAt },
+            createdAt: { $lt: lastPost.createdAt },
           })
             .sort("-createdAt")
             .limit(num);
         } else
           return await Post.find({
-            createdAt: { $lte: lastPost.createdAt },
+            createdAt: { $lt: lastPost.createdAt },
           }).sort("-createdAt");
       } else {
         return num

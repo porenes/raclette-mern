@@ -81,9 +81,9 @@ describe("post list", () => {
     const post2 = await Post.create(postDTOcreate2);
     const post3 = await Post.create(postDTOcreate3);
     const listPosts = await PostService.list(post2._id);
-    expect(listPosts).toHaveLength(2);
-    expect(listPosts[0]._id).toEqual(post2._id);
-    expect(listPosts[1]._id).toEqual(post1._id);
+    expect(listPosts).toHaveLength(1);
+    expect(listPosts[0]._id).not.toEqual(post2._id);
+    expect(listPosts[0]._id).toEqual(post1._id);
   });
   it("can list a certain number of posts", async () => {
     const post1 = await Post.create(postDTOcreate);
