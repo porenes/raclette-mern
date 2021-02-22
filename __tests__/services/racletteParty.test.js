@@ -51,7 +51,7 @@ describe("Raclette party create", () => {
       date: "2022-02-02",
     });
     //TODO do not use service and compare objects
-    expect(newRacletteParty.host).toBe(createdHost._id + "");
+    expect(newRacletteParty.host).toStrictEqual(createdHost._id);
   });
 });
 
@@ -62,7 +62,7 @@ describe("Raclette party show", () => {
     });
     const foundParty = await RaclettePartyService.show(party.id);
     expect(foundParty.id).toBe(party.id);
-    expect(foundParty.host).toBe(party.host);
+    expect(foundParty.host).toStrictEqual(party.host);
   });
 });
 

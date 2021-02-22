@@ -17,11 +17,13 @@ module.exports = {
         })
           .sort("date")
           .populate("guests", "-wooers -wooeds -compeers -email")
+          .populate("host", "-wooers -wooeds -compeers -email")
       : await RacletteParty.find({
           $or: [({ isPrivate: false }, { isPrivate: { $exists: false } })],
         })
           .sort("date")
-          .populate("guests", "-wooers -wooeds -compeers -email");
+          .populate("guests", "-wooers -wooeds -compeers -email")
+          .populate("host", "-wooers -wooeds -compeers -email");
 
     return racletteParties;
   },

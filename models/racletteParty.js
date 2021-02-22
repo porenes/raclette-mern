@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 require("./connoisseur");
 const raclettePartySchema = mongoose.Schema(
   {
-    host: { type: String, required: true },
+    host: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Connoisseur",
+      required: true,
+    },
     date: { type: Date, required: true },
     guests: [{ type: mongoose.Schema.Types.ObjectId, ref: "Connoisseur" }],
     seats: Number,
