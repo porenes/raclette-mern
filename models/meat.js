@@ -7,4 +7,4 @@ const MeatSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Connoisseur", MeatSchema);
+module.exports = mongoose.model("Meat", MeatSchema);

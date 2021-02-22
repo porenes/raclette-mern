@@ -7,7 +7,7 @@ module.exports = {
      * @param {Number} size size of the list to return
      * @param {Boolean} full choose if you want all fields or just a smart selection
      */
-  listPopularRaclettes: async (size = 10, full = false) => {
+  listPopularRaclettes: async (size = 5, full = false) => {
     const result = await axios.get(
       "https://fr.openfoodfacts.org/cgi/search.pl?" +
         "action=process" +
