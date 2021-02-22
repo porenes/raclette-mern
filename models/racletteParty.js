@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
+
+require("./connoisseur");
 const raclettePartySchema = mongoose.Schema(
   {
     host: { type: String, required: true },
     date: { type: Date, required: true },
-    guests: [String],
+    guests: [{ type: mongoose.Schema.Types.ObjectId, ref: "Connoisseur" }],
     seats: Number,
     isPrivate: Boolean,
   },

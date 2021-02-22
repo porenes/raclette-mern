@@ -41,6 +41,7 @@ describe("Raclette party list", () => {
     const foundParties = await RaclettePartyService.list();
     expect(foundParties).toHaveLength(0);
   });
+  //TODO check if fields are populated
 });
 
 describe("Raclette party create", () => {
@@ -71,24 +72,32 @@ describe("Raclette party addGuests", () => {
       date: "2022-02-02",
     });
     const updatedParty = await RaclettePartyService.addGuests(party.id, [
-      "toto",
-      "titi",
+      host1._id,
+      host3._id,
     ]);
-    expect(updatedParty.guests).toContainEqual("toto");
+    expect(updatedParty.guests).toContainEqual(host1._id);
+    expect(updatedParty.guests).toContainEqual(host3._id);
   });
 });
 
 const host1 = new connoisseur({
-  id: "id1",
+  _id: new mongoose.Types.ObjectId(),
   name: "Jean Cachesex",
   cheeseLoveRate: 5,
   meatEater: true,
   password: "M4nuMonAm0ur",
 });
 const host2 = new connoisseur({
-  id: "id2",
+  _id: new mongoose.Types.ObjectId(),
   name: "Manu Tango",
   cheeseLoveRate: 2,
+  meatEater: false,
+  password: "M4nuMonAm0ur",
+});
+const host3 = new connoisseur({
+  _id: new mongoose.Types.ObjectId(),
+  name: "Mimi Lafrite",
+  cheeseLoveRate: 1,
   meatEater: false,
   password: "M4nuMonAm0ur",
 });

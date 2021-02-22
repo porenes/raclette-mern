@@ -8,14 +8,21 @@ module.exports = {
     const racletteParties = user
       ? await RacletteParty.find({
           $or: [
-            { $or: [({ isPrivate: false }, { isPrivate: { $exists: false } })] },
+            {
+              $or: [({ isPrivate: false }, { isPrivate: { $exists: false } })],
+            },
             { host: user.id },
             { guests: user.id },
           ],
-        }).sort("date")
+        })
+          .sort("date")
+          .populate("guests", "-wooers -wooeds -compeers -email")
       : await RacletteParty.find({
           $or: [({ isPrivate: false }, { isPrivate: { $exists: false } })],
-        }).sort("date");
+        })
+          .sort("date")
+          .populate("guests", "-wooers -wooeds -compeers -email");
+
     return racletteParties;
   },
 

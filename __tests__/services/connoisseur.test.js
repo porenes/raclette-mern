@@ -1,7 +1,5 @@
 "use strict";
 
-const mongoose = require("mongoose");
-
 const dbHandler = require("../config/testDbHandler");
 const ConnoisseurService = require("../../services/connoisseur.service");
 const Connoisseur = require("../../models/connoisseur");
@@ -100,7 +98,7 @@ describe("Connoisseur woo", () => {
   it("can woo a connoisseur", async () => {
     const wooedId = (await Connoisseur.create(connoisseurComplete))._id;
     const wooerId = (await Connoisseur.create(connoisseurDTO2))._id;
-    const {wooer,wooed} = await ConnoisseurService.woo(wooerId, wooedId);
+    const { wooer, wooed } = await ConnoisseurService.woo(wooerId, wooedId);
     expect(wooed.wooers).toHaveLength(1);
     expect(wooer.wooeds).toHaveLength(1);
   });
@@ -110,7 +108,10 @@ describe("Connoisseur unwoo", () => {
     const unwooedId = (await Connoisseur.create(connoisseurComplete))._id;
     const unwooerId = (await Connoisseur.create(connoisseurDTO2))._id;
     await ConnoisseurService.woo(unwooerId, unwooedId);
-    const {unwooer,unwooed} = await ConnoisseurService.unwoo(unwooerId, unwooedId);
+    const { unwooer, unwooed } = await ConnoisseurService.unwoo(
+      unwooerId,
+      unwooedId
+    );
     expect(unwooed.wooers).toHaveLength(0);
     expect(unwooer.wooeds).toHaveLength(0);
   });
