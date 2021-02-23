@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-
+require("./connoisseur");
 const ReviewSchema = mongoose.Schema(
   {
-    productId: { type: String, unique: true },
+    productId: { type: String },
     priceRate: { type: Number },
     tasteRate: { type: Number },
     tasteComment: { type: String },
@@ -10,6 +10,7 @@ const ReviewSchema = mongoose.Schema(
     textureComment: { type: String },
     totalComment: { type: String },
     totalRate: { type: Number },
+    reviewer: { type: mongoose.Schema.Types.ObjectId, ref: "Connoisseur" },
   },
   { timestamps: true }
 );
