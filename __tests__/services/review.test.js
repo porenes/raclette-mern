@@ -72,10 +72,26 @@ describe("read review", () => {
 describe("delete review", () => {
   it("can delete a review", async () => {
     const { _id } = await Review.create(reviewDTO_1);
-    expect(async () => {
-      await ReviewService.delete(_id);
-    }).not.toThrow();
+    await ReviewService.delete(_id);
     expect(await Review.findById(_id)).toBeNull();
+  });
+});
+
+describe("list by product", () => {
+  it("can list reviews for an existing product", async () => {
+    await Review.create(reviewDTO_1);
+    expect(
+      await ReviewService.listByProduct(reviewDTO_1.productId)
+    ).not.toBeNull();
+    expect(
+      await ReviewService.listByProduct(reviewDTO_1.productId)
+    ).not.toHaveLength(0);
+  });
+  it("doesn't list any review if the product has no review", async () => {
+    await Review.create(reviewDTO_1);
+    expect(
+      await ReviewService.listByProduct("fake_product_id")
+    ).toHaveLength(0);
   });
 });
 

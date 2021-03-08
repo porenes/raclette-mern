@@ -37,4 +37,13 @@ module.exports = {
       res.status(400).json({ message: "Something went wrong", error });
     }
   },
+  listProduct: async (req, res, next) => {
+    const { productId } = req.params;
+    if (!productId) res.status(422).message("ProductId is required");
+    try {
+      res.status(200).json(await ReviewService.listByProduct(productId));
+    } catch (error) {
+      res.status(400).json({ message: "Something went wrong", error });
+    }
+  },
 };
