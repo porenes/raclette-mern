@@ -1,11 +1,13 @@
 "use strict";
 
 const mongoose = require("mongoose");
+const faker = require("faker");
 
 const dbHandler = require("../config/testDbHandler");
 const Connoisseur = require("../../models/connoisseur");
 const Review = require("../../models/review");
 const ReviewService = require("../../services/review.service");
+const { fake } = require("faker");
 
 /**
  * Connect to a new in-memory database before running any tests.
@@ -78,20 +80,38 @@ describe("delete review", () => {
 });
 
 describe("list by product", () => {
-  it("can list reviews for an existing product", async () => {
-    await Review.create(reviewDTO_1);
-    expect(
-      await ReviewService.listByProduct(reviewDTO_1.productId)
-    ).not.toBeNull();
-    expect(
-      await ReviewService.listByProduct(reviewDTO_1.productId)
-    ).not.toHaveLength(0);
+  beforeEach(async () => {
+    for (let i = 0; i < 20; i++) {
+      await Review.create(randomReviewDTO());
+    }
+    for (let i = 0; i < 20; i++) {
+      await Review.create(randomReviewDTO(reviewDTO_1.productId));
+    }
+  });
+  it("can list 10 reviews for an existing product", async () => {
+    const reviewList = await ReviewService.listByProduct(reviewDTO_1.productId);
+    expect(reviewList).not.toBeNull();
+    expect(reviewList).not.toHaveLength(0);
+    expect(reviewList).toHaveLength(10);
   });
   it("doesn't list any review if the product has no review", async () => {
-    await Review.create(reviewDTO_1);
-    expect(
-      await ReviewService.listByProduct("fake_product_id")
-    ).toHaveLength(0);
+    expect(await ReviewService.listByProduct("fake_product_id")).toHaveLength(
+      0
+    );
+  });
+  it("can manage pagination", async () => {
+    const reviewList = await ReviewService.listByProduct(
+      reviewDTO_1.productId,
+      15,
+      1
+    );
+    expect(reviewList).toHaveLength(15);
+    const nextPageReviewList = await ReviewService.listByProduct(
+      reviewDTO_1.productId,
+      15,
+      2
+    );
+    expect(nextPageReviewList).toHaveLength(5);
   });
 });
 
@@ -107,4 +127,33 @@ const reviewDTO_1 = {
   totalComment: "Aut cupiditate voluptas officia error commodi id.",
   totalRate: 5,
   reviewer: fakeId,
+};
+
+const randomReviewDTO = (
+  productId = faker.random.uuid(),
+  reviewer = new mongoose.Types.ObjectId()
+) => {
+  return {
+    productId,
+    priceRate: faker.random.number({
+      min: 0,
+      max: 5,
+    }),
+    tasteRate: faker.random.number({
+      min: 0,
+      max: 5,
+    }),
+    tasteComment: faker.lorem.sentence(),
+    textureRate: faker.random.number({
+      min: 0,
+      max: 5,
+    }),
+    textureComment: faker.lorem.sentence(),
+    totalComment: faker.lorem.sentence(),
+    totalRate: faker.random.number({
+      min: 0,
+      max: 5,
+    }),
+    reviewer,
+  };
 };
