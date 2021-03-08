@@ -39,6 +39,9 @@ const postRoute = require("./routes/post.routes");
 app.use("/post", postRoute);
 const productsRoute = require("./routes/products.routes");
 app.use("/products", productsRoute);
+const reviewsRoute = require("./routes/review.routes");
+app.use("/review", reviewsRoute);
+
 // Nice error handling
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {
